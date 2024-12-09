@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 375c6f765985c4a539f757c9c8b5cfec
+guid: f150ee2bd3e67e24db668d5967a07170
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 75
+  spritePixelsToUnits: 45
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -121,12 +121,12 @@ TextureImporter:
       name: tileset_1
       rect:
         serializedVersion: 2
-        x: 175
-        y: 70
-        width: 64
-        height: 43
+        x: 174
+        y: 71
+        width: 66
+        height: 40
       alignment: 9
-      pivot: {x: 1.1575587, y: -0.15}
+      pivot: {x: 0.5, y: -0.18}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -146,8 +146,8 @@ TextureImporter:
         y: 69
         width: 64
         height: 43
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: -0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -209,8 +209,8 @@ TextureImporter:
         y: 5
         width: 85
         height: 43
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

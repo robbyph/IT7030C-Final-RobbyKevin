@@ -2092,7 +2092,7 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5644447833624348687, guid: 683ef48f1cf1d4e43b853bd1298509ac, type: 3}
+    - target: {fileID: 7494212170194388855, guid: 4a2af7a04b182814e95025c63f97c34a, type: 3}
       propertyPath: m_Name
       value: shroomPrefab (2)
       objectReference: {fileID: 0}

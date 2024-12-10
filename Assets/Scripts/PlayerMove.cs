@@ -83,12 +83,16 @@ public class PlayerMove : MonoBehaviour
             isGrounded = true;
         }
 
-        if (collision.gameObject.tag == "Trap" || collision.gameObject.tag == "Bullet" && life >= 0)
+        if (collision.gameObject.tag == "Trap" || collision.gameObject.tag == "HostileProjectile" && life >= 0)
         {
             life -= 1;
             Debug.Log("Life" + life);
             hpBar.value = (life / 3.0f);
             Debug.Log("Life % : " + (life / 3.0f));
+            if (collision.gameObject.tag == "HostileProjectile")
+            {
+                Destroy(collision.gameObject);
+            }
         }
     }
 

@@ -67,7 +67,12 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+            playerAnimator.SetBool("Jump", true);
             rb.AddForce(new Vector2(0.0f, 7.0f), ForceMode2D.Impulse);
+        }
+        else
+        {
+            playerAnimator.SetBool("Jump", false);
         }
     }
 

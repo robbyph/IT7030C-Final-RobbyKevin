@@ -8,7 +8,9 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody2D rb;
     public float thrust = 0.4f;
     public bool isGrounded = false;
-    public int life = 3;
+    private float life = 1.0f;
+    public float infectionRate = 0.01f;
+    public bool isInfected = false;
 
     public bool facingRight = true;
 
@@ -28,6 +30,15 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if the player is infected, drain health at a rate of infectionRate per second
+        if (isInfected && life >= 0)
+        {
+            Debug.Log("Due to infection, health is decreasing from " + life + " to " + (life - infectionRate * Time.deltaTime));
+            life -= infectionRate * Time.deltaTime;
+            hpBar.value = life;
+        }
+
+
         if (life <= 0 && doOnce)
         {
             Debug.Log("game over");
@@ -85,10 +96,8 @@ public class PlayerMove : MonoBehaviour
 
         if (collision.gameObject.tag == "Trap" || collision.gameObject.tag == "HostileProjectile" && life >= 0)
         {
-            life -= 1;
-            Debug.Log("Life" + life);
-            hpBar.value = (life / 3.0f);
-            Debug.Log("Life % : " + (life / 3.0f));
+            Debug.Log("Infected!");
+            isInfected = true;
             if (collision.gameObject.tag == "HostileProjectile")
             {
                 Destroy(collision.gameObject);
@@ -112,4 +121,12 @@ public class PlayerMove : MonoBehaviour
         transform.localScale = theScale;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Sink")
+        {
+            Debug.Log("Cured!");
+            isInfected = false;
+        }
+    }
 }

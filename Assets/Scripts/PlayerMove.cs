@@ -94,14 +94,17 @@ public class PlayerMove : MonoBehaviour
             isGrounded = true;
         }
 
-        if (collision.gameObject.tag == "Trap" || collision.gameObject.tag == "HostileProjectile" && life >= 0)
+        if (collision.gameObject.tag == "Trap")
         {
             Debug.Log("Infected!");
             isInfected = true;
-            if (collision.gameObject.tag == "HostileProjectile")
-            {
-                Destroy(collision.gameObject);
-            }
+        }
+
+        if(collision.gameObject.tag == "HostileProjectile")
+        {
+            life -= 0.05f;
+            //isInfected = true;
+            Destroy(collision.gameObject);
         }
     }
 

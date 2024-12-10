@@ -16,6 +16,7 @@ public class PlayerMove : MonoBehaviour
 
     private Animator playerAnimator;
 
+    public Slider hpBar;
 
     // Start is called before the first frame update 
     void Start()
@@ -75,6 +76,14 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.tag == "Platform")
         {
             isGrounded = true;
+        }
+
+        if (collision.gameObject.tag == "Trap" || collision.gameObject.tag == "Bullet" && life >= 0)
+        {
+            life -= 1;
+            Debug.Log("Life" + life);
+            hpBar.value = (life / 3.0f);
+            Debug.Log("Life % : " + (life / 3.0f));
         }
     }
 

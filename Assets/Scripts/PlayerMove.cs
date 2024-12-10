@@ -14,11 +14,14 @@ public class PlayerMove : MonoBehaviour
 
     private bool doOnce = true;
 
+    private Animator playerAnimator;
+
 
     // Start is called before the first frame update 
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
+        playerAnimator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -41,6 +44,24 @@ public class PlayerMove : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
 
         rb.AddForce(new Vector2(horizontal * thrust, 0.0f));
+
+        if (Mathf.Abs(horizontal) > 0.1f)
+        {
+            playerAnimator.SetBool("Run", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("Run", false);
+        }
+
+        if (horizontal > 0 && !facingRight)
+        {
+            FlipCharacter();
+        }
+        else if (horizontal < 0 && facingRight)
+        {
+            FlipCharacter();
+        }
 
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -65,5 +86,12 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    private void FlipCharacter()
+    {
+        facingRight = !facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
 
 }

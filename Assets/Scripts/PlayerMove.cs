@@ -105,6 +105,7 @@ public class PlayerMove : MonoBehaviour
             life -= 0.05f;
             //isInfected = true;
             Destroy(collision.gameObject);
+            hpBar.value = life;
         }
     }
 

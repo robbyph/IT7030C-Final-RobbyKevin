@@ -25,15 +25,29 @@ public class ShootAtPlayer : MonoBehaviour
         {
              yield return new WaitForSeconds(2);
 
-            //spawn bullet
-            GameObject projObject = Instantiate(projPrefab);
+            if (PlayerInRange())
+            {
+                //spawn bullet
+                GameObject projObject = Instantiate(projPrefab);
+
+                //what direction should the bullet go?
+                Vector2 enemyPos = this.transform.position;
+                Vector2 direction = enemyPos - (Vector2)player.transform.position;
+                projObject.transform.right = -direction;
+                //spawn bulllet where?
+                projObject.transform.position = projSpawnLoc.transform.position;
+            }
             
-            //what direction should the bullet go?
-            Vector2 enemyPos = this.transform.position;
-            Vector2 direction = enemyPos - (Vector2)player.transform.position;
-            projObject.transform.right = -direction;
-            //spawn bulllet where?
-            projObject.transform.position = projSpawnLoc.transform.position;
         }
+    }
+
+    bool PlayerInRange()
+    {
+        float distance = Vector2.Distance(this.transform.position, player.transform.position);
+        if(distance < 10)
+        {
+            return true;
+        }
+        return false;
     }
 }

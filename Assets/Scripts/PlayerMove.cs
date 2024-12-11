@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PlayerMove : MonoBehaviour
     private float life = 1.0f;
     public float infectionRate = 0.01f;
     public bool isInfected = false;
+
+    public TMP_Text gameOverText;
 
     public bool facingRight = true;
 
@@ -25,7 +28,9 @@ public class PlayerMove : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         playerAnimator = gameObject.GetComponent<Animator>();
+        gameOverText.gameObject.SetActive(false);
     }
+
 
     // Update is called once per frame
     void Update()
@@ -41,16 +46,7 @@ public class PlayerMove : MonoBehaviour
 
         if (life <= 0 && doOnce)
         {
-            Debug.Log("game over");
-            Destroy(gameObject.GetComponent<CapsuleCollider2D>());
-            Vector3 myScale = transform.localScale;
-            myScale.y *= -1;
-            transform.localScale = myScale;
-
-            Camera maincam = this.GetComponentInChildren<Camera>();
-            maincam.transform.parent = null;
-
-            doOnce = false;
+            PlayerDeath();
         }
 
         float horizontal = Input.GetAxis("Horizontal");
@@ -132,5 +128,45 @@ public class PlayerMove : MonoBehaviour
             Debug.Log("Cured!");
             isInfected = false;
         }
+
+        if (collision.gameObject.tag == "Goal")
+        {
+            Debug.Log("Winner!");
+            isInfected = false;
+            if (gameOverText != null)
+            {
+                gameOverText.text = "You Made It.";
+                gameOverText.color = Color.blue;
+                gameOverText.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.LogError("gameOverText is not assigned!");
+            }
+        }
+
+        if (collision.gameObject.tag == "KillBox")
+        {
+            PlayerDeath();
+        }
+    }
+
+    private void PlayerDeath()
+    {
+        Debug.Log("game over");
+
+        gameOverText.text = "You Lose!!!!!!!";
+        gameOverText.color = Color.red;
+        gameOverText.gameObject.SetActive(true);
+
+        Destroy(gameObject.GetComponent<CapsuleCollider2D>());
+        Vector3 myScale = transform.localScale;
+        myScale.y *= -1;
+        transform.localScale = myScale;
+
+        Camera maincam = this.GetComponentInChildren<Camera>();
+        maincam.transform.parent = null;
+
+        doOnce = false;
     }
 }

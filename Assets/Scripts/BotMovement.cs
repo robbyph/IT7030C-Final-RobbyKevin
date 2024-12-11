@@ -1,67 +1,54 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BotMovement : MonoBehaviour
 {
+    private Vector3 startPos;
+    private Vector3 targetPos;
+    private bool movingRight = true;
+    private float moveDistance = 2.0f;
+    private float moveSpeed = 0.002f;
 
-    Vector3 startPos = new Vector3(0, 0, 0);
-    Vector3 targetPos = new Vector3(0, 0, 0);
-    private bool facingRight;
-
-    Vector3 currRotation;
-    Vector3 mobScale;
-
-    // Start is called before the first frame update
     void Start()
     {
-        startPos = gameObject.transform.position;
-        // targetPos = startPos + new Vector3(2.0f, 0, 0);
-        currRotation = transform.eulerAngles;
-        mobScale = transform.localScale;
-        if (mobScale.x < 0)
+        startPos = transform.position;
+        // Initial direction and target based on starting scale
+        if (transform.localScale.x < 0)
         {
-            facingRight = false;
-            targetPos = startPos + new Vector3(-2.0f, 0, 0);
+            movingRight = false;
         }
+        UpdateTargetPosition();
+    }
+
+    void Update()
+    {
+        Vector3 currentPos = transform.position;
+
+        // Move towards target
+        if (currentPos != targetPos)
+        {
+            transform.position = Vector3.MoveTowards(currentPos, targetPos, moveSpeed);
+        }
+        // At destination - switch direction and update target
         else
         {
-            facingRight = true;
-            targetPos = startPos + new Vector3(2.0f, 0, 0);
+            movingRight = !movingRight;
+            UpdateTargetPosition();
+            FlipSprite();
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void UpdateTargetPosition()
     {
-        Vector3 pos = transform.position;
-        if (pos != targetPos)
-        {
-            transform.position = Vector3.MoveTowards(pos, targetPos, 0.002f);
-        }
-        else
-        {
-            // This is where the flipping should occur, when the mob reaches its "destination"
-            
-            if (pos == targetPos)
-            {
-                mobScale.x *= -1;
-                transform.localScale = mobScale;
-            }
+        targetPos = movingRight ?
+            startPos + new Vector3(moveDistance, 0, 0) :
+            startPos + new Vector3(-moveDistance, 0, 0);
+    }
 
-            targetPos = startPos;
-            if (pos == startPos)
-            {
-                if (mobScale.x < 0)
-                {
-                    targetPos = startPos + new Vector3(-2.0f, 0, 0);
-                }
-                else
-                {
-                    targetPos = startPos + new Vector3(2.0f, 0, 0);
-                }
-                
-            }
-        }
+    private void FlipSprite()
+    {
+        Vector3 newScale = transform.localScale;
+        // Reversed the logic here - now negative scale when moving right
+        newScale.x = Mathf.Abs(newScale.x) * (movingRight ? -1 : 1);
+        transform.localScale = newScale;
     }
 }

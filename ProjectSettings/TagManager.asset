@@ -8,6 +8,8 @@ TagManager:
   - Trap
   - HostileProjectile
   - Sink
+  - Goal
+  - KillBox
   layers:
   - Default
   - TransparentFX

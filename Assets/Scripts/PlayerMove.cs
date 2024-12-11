@@ -13,6 +13,7 @@ public class PlayerMove : MonoBehaviour
     public float infectionRate = 0.01f;
     public bool isInfected = false;
 
+    public GameObject inGameMenu;
     public TMP_Text gameOverText;
 
     public bool facingRight = true;
@@ -35,6 +36,10 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            inGameMenu.SetActive(true);
+        }
         //if the player is infected, drain health at a rate of infectionRate per second
         if (isInfected && life >= 0)
         {
